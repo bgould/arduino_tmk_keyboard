@@ -23,26 +23,8 @@
 
 #include "Arduino.h"
 
-#define NO_DEBUG
-
-#include "config.h"
 #include "KeyboardConverter.h"
-#include "action_code.h"
-#include "action.h"
-#include "action_util.h"
-#include "keymap.h"
 
-KeyboardConverter::KeyboardConverter(KeyboardHost *host)
+KeyboardConverter::KeyboardConverter()
 {
-    _host = host;
-}
-
-void KeyboardConverter::init()
-{
-    keyboard_init();
-}
-
-void KeyboardConverter::run_task()
-{
-    keyboard_task();
 }

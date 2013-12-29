@@ -6,16 +6,14 @@
 
 #include "KeyboardHost.h"
 
-
-
 class KeyboardConverter
 {
     public:
-        KeyboardConverter(KeyboardHost *host);
-        void init();
-		void run_task();
-    private:
-        KeyboardHost      *_host; 
+        KeyboardConverter();
+        virtual void init();
+		virtual void run_task();
+    protected:
+        KeyboardHost  *_host; 
 };
 
 #endif

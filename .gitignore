@@ -11,3 +11,13 @@
 *.lai
 *.la
 *.a
+
+# target folder
+KeyboardConverter
+
+# project files
+*.geany
+
+# ignore changes in the submodule
+tmk_keyboard
+

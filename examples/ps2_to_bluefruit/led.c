@@ -1,3 +1,4 @@
+#include "tmk_keyboard.h"
 /*
 Copyright 2011 Jun Wako <wakojun@gmail.com>
 
