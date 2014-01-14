@@ -1,4 +1,4 @@
-arduino-tmk-keyboard
+arduino_tmk_keyboard
 ====================
 
 Simple (and incomplete) Arduino/C++ wrapper for the fantastic [TMK Keyboard Firmware](http://github.com/tmk/tmk_keyboard)
