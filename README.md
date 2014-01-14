@@ -3,9 +3,9 @@ arduino_tmk_keyboard
 
 Simple (and incomplete) Arduino/C++ wrapper for the fantastic [TMK Keyboard Firmware](http://github.com/tmk/tmk_keyboard)
 
-This implementation is "incomplete" in that at the moment the only provided protocol is PS/2, and the only host implementation is for the excellent Bluefruit EZ-Key HID from Adafruit Industries.
+This implementation is "incomplete" because at the moment the only provided protocol is PS/2, and the only host implementation is for the excellent Bluefruit EZ-Key HID from Adafruit Industries.
 
-If you have the ability to compile & load AVR C code onto your microcontroller, there is nothing that this library provides that you could not do directly with tmk_keyboard.  However you may be interested in this project if you want to:
+If you have the ability to compile &amp; load AVR C code onto your microcontroller, there is nothing that this library provides that you could not do directly with tmk_keyboard.  However you may be interested in this project if you want to:
 * compile and load keyboard or converter firmware in the Arduino IDE
 * utilize object oriented techniques to create new implementations of the tmk_keyboard components (host, matrix, etc)
 * utilize other Arduino libraries in custom tmk_keyboard action functions
