@@ -22,7 +22,7 @@ So far this wrapper has been developed for a specific project, but I will expand
 
 "API" components (such as hosts, matrices, and keymaps) are refactored into a C++ object heirarchy to allow for easier customization & implementation within the Arduino IDE.
 
-To get started, download this project as a zip file and put it in your Arduino libraries folder.  You can use the [ps2_bluefruit_converter] (https://github.com/bgould/arduino-tmk-keyboard/blob/master/examples/ps2_bluefruit_converter/ps2_bluefruit_converter.ino) example to see an example of how to utilize this library to build a bluetooth converter for a terminal Model M keyboard.
+To get started, download this project as a zip file and put it in your Arduino libraries folder.  You can use the [terminal_bluefruit_converter] (https://github.com/bgould/arduino-tmk-keyboard/blob/master/examples/terminal_bluefruit_converter/terminal_bluefruit_converter.ino) example to see an example of how to utilize this library to build a bluetooth converter for a terminal Model M keyboard.
 
 Resources:
 * [EZ-Key HID Tutorial at learn.adafruit.com](http://learn.adafruit.com/introducing-bluefruit-ez-key-diy-bluetooth-hid-keyboard)
