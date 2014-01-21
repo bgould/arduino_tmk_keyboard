@@ -1,13 +1,23 @@
 #ifndef KEYBOARDFIRMWARE_H
 #define KEYBOARDFIRMWARE_H 1
 
-#define MATRIX_ROWS 17
-#define MATRIX_COLS 8
+#define START_KEYMAPS extern "C" {
 
-#define DEBUG_ENABLE true
-#define DEBUG_MATRIX false
+#define KEYMAPS static const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] 
 
-#include <SoftwareSerial.h>
+#define FN_ACTIONS static const uint16_t fn_actions[] PROGMEM
+
+#define KEYMAPS_FINISHED uint8_t keymap_key_to_keycode(uint8_t layer, key_t key) { \
+        return pgm_read_byte(&keymaps[(layer)][(key.row)][(key.col)]); \
+    } \
+    action_t keymap_fn_to_action(uint8_t keycode) { \
+        action_t action; \
+        action.code = pgm_read_word(&fn_actions[FN_INDEX(keycode)]); \
+        return action; \
+    } \
+}
+
+#include "Arduino.h"
 #include "gluecode.h"
 #include "KeyboardKey.h"
 #include "KeyboardMatrix.h"
@@ -15,6 +25,9 @@
 #include "KeyboardDebug.h"
 #include "KeyboardReport.h"
 #include "MouseReport.h"
+#include "BluefruitHost.h"
+#include "PS2Matrix.h"
+#include "PS2MatrixCodeset3.h"
 
 class KeyboardFirmware_
 {

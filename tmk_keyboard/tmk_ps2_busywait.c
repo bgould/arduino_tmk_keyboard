@@ -49,7 +49,7 @@ POSSIBILITY OF SUCH DAMAGE.
 extern "C" {
 #endif
 
-#define WAIT(stat, us, err) do { \
+#define PS2_WAIT(stat, us, err) do { \
     if (!wait_##stat(us)) { \
         ps2_error = err; \
         goto ERROR; \
@@ -80,7 +80,7 @@ uint8_t ps2_host_send(uint8_t data)
     /* 'Request to Send' and Start bit */
     data_lo();
     clock_hi();
-    WAIT(clock_lo, 10000, 10);   // 10ms [5]p.50
+    PS2_WAIT(clock_lo, 10000, 10);   // 10ms [5]p.50
 
     /* Data bit */
     uint8_t i;
@@ -92,27 +92,27 @@ uint8_t ps2_host_send(uint8_t data)
         } else {
             data_lo();
         }
-        WAIT(clock_hi, 50, 2);
-        WAIT(clock_lo, 50, 3);
+        PS2_WAIT(clock_hi, 50, 2);
+        PS2_WAIT(clock_lo, 50, 3);
     }
 
     /* Parity bit */
     _delay_us(15);
     if (parity) { data_hi(); } else { data_lo(); }
-    WAIT(clock_hi, 50, 4);
-    WAIT(clock_lo, 50, 5);
+    PS2_WAIT(clock_hi, 50, 4);
+    PS2_WAIT(clock_lo, 50, 5);
 
     /* Stop bit */
     _delay_us(15);
     data_hi();
 
     /* Ack */
-    WAIT(data_lo, 50, 6);
-    WAIT(clock_lo, 50, 7);
+    PS2_WAIT(data_lo, 50, 6);
+    PS2_WAIT(clock_lo, 50, 7);
 
     /* wait for idle state */
-    WAIT(clock_hi, 50, 8);
-    WAIT(data_hi, 50, 9);
+    PS2_WAIT(clock_hi, 50, 8);
+    PS2_WAIT(data_hi, 50, 9);
 
     inhibit();
     return ps2_host_recv_response();
@@ -145,33 +145,33 @@ uint8_t ps2_host_recv(void)
     idle();
 
     /* start bit [1] */
-    WAIT(clock_lo, 100, 1); // TODO: this is enough?
-    WAIT(data_lo, 1, 2);
-    WAIT(clock_hi, 50, 3);
+    PS2_WAIT(clock_lo, 100, 1); // TODO: this is enough?
+    PS2_WAIT(data_lo, 1, 2);
+    PS2_WAIT(clock_hi, 50, 3);
 
     /* data [2-9] */
     uint8_t i;
     for (i = 0; i < 8; i++) {
-        WAIT(clock_lo, 50, 4);
+        PS2_WAIT(clock_lo, 50, 4);
         if (data_in()) {
             parity = !parity;
             data |= (1<<i);
         }
-        WAIT(clock_hi, 50, 5);
+        PS2_WAIT(clock_hi, 50, 5);
     }
 
     /* parity [10] */
-    WAIT(clock_lo, 50, 6);
+    PS2_WAIT(clock_lo, 50, 6);
     if (data_in() != parity) {
         ps2_error = PS2_ERR_PARITY;
         goto ERROR;
     }
-    WAIT(clock_hi, 50, 7);
+    PS2_WAIT(clock_hi, 50, 7);
 
     /* stop bit [11] */
-    WAIT(clock_lo, 50, 8);
-    WAIT(data_hi, 1, 9);
-    WAIT(clock_hi, 50, 10);
+    PS2_WAIT(clock_lo, 50, 8);
+    PS2_WAIT(data_hi, 1, 9);
+    PS2_WAIT(clock_hi, 50, 10);
 
     inhibit();
     return data;

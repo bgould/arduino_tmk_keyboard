@@ -21,10 +21,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <stdbool.h>
 #include <stdint.h>
 
-#define EXTRAKEY_ENABLE 1
-
-#define NO_ACTION_ONESHOT
-#define NO_ACTION_MACRO
+//#define NO_ACTION_ONESHOT
+//#define NO_ACTION_MACRO
 #define NO_ACTION_TAPPING
 
 #ifdef __cplusplus

@@ -1,12 +1,12 @@
-#ifndef BluefruitHost_h
-#define BluefruitHost_h
+#ifndef BLUEFRUITHOST_H
+#define BLUEFRUITHOST_H 1
 
 #include "KeyboardFirmware.h"
 
 class BluefruitHost : public KeyboardHost
 {
 	public:
-		BluefruitHost(int rxPin, int txPin);
+		BluefruitHost();
 		virtual void begin();
 		virtual void sendKeyboard(KeyboardReport &report);
 		virtual void sendMouse(MouseReport &report);
@@ -16,7 +16,6 @@ class BluefruitHost : public KeyboardHost
     protected:
         void _serial_send(uint8_t data);
 	private:
-        SoftwareSerial _serial;
         uint16_t _last_consumer_data;
 };
 

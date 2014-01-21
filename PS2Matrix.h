@@ -1,11 +1,7 @@
 #ifndef PS2MATRIX_H
 #define PS2MATRIX_H 1
 
-#define MATRIX_ROWS 17
-#define MATRIX_COLS 8
-
 #include "KeyboardFirmware.h"
-#include "tmk_ps2.h"
 
 #define PS2_ROW(code)      (code>>3)
 #define PS2_COL(code)      (code&0x07)

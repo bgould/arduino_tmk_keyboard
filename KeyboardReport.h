@@ -1,10 +1,7 @@
 #ifndef KEYBOARDREPORT_H
 #define KEYBOARDREPORT_H
 
-#include "Arduino.h"
-#include "tmk_report.h"
-
-#undef NKRO_ENABLE
+#include "KeyboardFirmware.h"
 
 class KeyboardReport
 {

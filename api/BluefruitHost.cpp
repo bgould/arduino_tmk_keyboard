@@ -38,15 +38,12 @@ static void bluefruit_trace_footer()
 }
 #endif
 
-BluefruitHost::BluefruitHost(int rxPin, int txPin) : _serial(rxPin, txPin) {
+BluefruitHost::BluefruitHost() {
 }
 
 void BluefruitHost::begin()
 {
-    if (Serial1)
-        Serial1.begin(9600);
-    else
-        _serial.begin(9600);
+    Serial1.begin(9600);
 }
 
 uint8_t BluefruitHost::getLEDs()
@@ -164,9 +161,5 @@ void BluefruitHost::_serial_send(uint8_t data)
     KeyboardDebug.print(' ');
     KeyboardDebug.print(data, HEX);
 #endif
-    if (Serial1) {
-        Serial1.write(data);
-    } else {
-        _serial.write(data);
-    }
+    Serial1.write(data);
 }

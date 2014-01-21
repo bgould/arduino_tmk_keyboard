@@ -30,10 +30,13 @@
 extern "C" {
 #endif
 
-#include "tmk_matrix.h"
-#include "tmk_action.h"
-#include "tmk_util.h"
-#include "tmk_host.h"
+#include "tmk_keyboard/tmk_keymap.h"
+#include "tmk_keyboard/tmk_ps2.h"
+#include "tmk_keyboard/tmk_report.h"
+#include "tmk_keyboard/tmk_matrix.h"
+#include "tmk_keyboard/tmk_action.h"
+#include "tmk_keyboard/tmk_util.h"
+#include "tmk_keyboard/tmk_host.h"
 
 void exec_action(uint8_t r, uint8_t c, matrix_row_t matrix_row);
 

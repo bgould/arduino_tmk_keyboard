@@ -1,7 +1,4 @@
 #include "PS2Matrix.h"
-#include "tmk_ps2.h"
-//#include "tmk_util.h"
-
 
 PS2Matrix::PS2Matrix()
 {

@@ -110,7 +110,7 @@ KeyboardFirmware_ KeyboardFirmware;
 static uint8_t keyboard_leds(void) {
 #if DEBUG_ENABLE
     KeyboardDebug.println("entering send_keyboard()");
-#endif{
+#endif
     return KeyboardFirmware.getHost()->getLEDs();
 }
 
