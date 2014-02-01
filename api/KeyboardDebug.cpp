@@ -5,3 +5,7 @@ size_t KeyboardDebug_::write(uint8_t c) {
 }
 
 KeyboardDebug_ KeyboardDebug;
+
+extern "C" void arduino_tmk_sendchar(uint8_t c) {
+	Serial.write(c);
+}

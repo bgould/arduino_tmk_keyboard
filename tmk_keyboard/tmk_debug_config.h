@@ -35,14 +35,18 @@ typedef union {
         bool mouse:1;
         uint8_t reserved:4;
     };
-} debug_config_t;
-debug_config_t debug_config;
+} tmk_debug_config_t;
+extern tmk_debug_config_t tmk_debug_config;
+
+#ifndef __cplusplus
+tmk_debug_config_t debug_config;
+#endif
 
 /* for backward compatibility */
-#define debug_enable    (debug_config.enable)
-#define debug_matrix    (debug_config.matrix)
-#define debug_keyboard  (debug_config.keyboard)
-#define debug_mouse     (debug_config.mouse)
+//#define tmk_debug_enable    (tmk_debug_config.enable)
+//#define tmk_debug_matrix    (tmk_debug_config.matrix)
+#define tmk_debug_keyboard  (debug_config.keyboard)
+//#define tmk_debug_mouse     (tmk_debug_config.mouse)
 
 #ifdef __cplusplus
 }

@@ -6,13 +6,6 @@
 #include "tmk_util.h"
 #include "tmk_action_layer.h"
 
-#ifdef DEBUG_ACTION
-#include "tmk_debug.h"
-#else
-#include "tmk_nodebug.h"
-#endif
-
-
 /* 
  * Default Layer State
  */
@@ -20,10 +13,10 @@ uint32_t default_layer_state = 0;
 
 static void default_layer_state_set(uint32_t state)
 {
-    debug("default_layer_state: ");
-    default_layer_debug(); debug(" to ");
+    dprint("default_layer_state: ");
+    default_layer_debug(); dprint(" to ");
     default_layer_state = state;
-    default_layer_debug(); debug("\n");
+    default_layer_debug(); dprint("\n");
     clear_keyboard_but_mods(); // To avoid stuck keys
 }
 

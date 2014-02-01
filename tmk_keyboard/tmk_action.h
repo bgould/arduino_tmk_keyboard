@@ -22,6 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "tmk_keycode.h"
 #include "tmk_action_code.h"
 #include "tmk_action_macro.h"
+#include "tmk_action_layer.h"
 
 #ifdef __cplusplus
 extern "C" {

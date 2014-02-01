@@ -26,17 +26,15 @@
 
 #include "BluefruitHost.h"
 
-#if DEBUG_ENABLE   
-static void bluefruit_trace_header()
+static inline void bluefruit_trace_header()
 {
-    KeyboardDebug.print(F("=== HID report via Bluefruit ===> "));
+    kb_dprint("=== HID report via Bluefruit ===> ");
 }
 
-static void bluefruit_trace_footer()
+static inline void bluefruit_trace_footer()
 {
-    KeyboardDebug.print(F("\n"));
+    kb_dprintln("");
 }
-#endif
 
 BluefruitHost::BluefruitHost() {
 }
@@ -54,9 +52,7 @@ uint8_t BluefruitHost::getLEDs()
 
 void BluefruitHost::sendKeyboard(KeyboardReport &report)
 {
-#if DEBUG_ENABLE   
     bluefruit_trace_header();
-#endif
     _serial_send(0xFD);
     _serial_send(report.getModifiers());
     _serial_send(report.getReserved());
@@ -64,16 +60,12 @@ void BluefruitHost::sendKeyboard(KeyboardReport &report)
     {
         _serial_send(report.getKey(i));
     }
-#if DEBUG_ENABLE
     bluefruit_trace_footer();
-#endif
 }
 
 void BluefruitHost::sendMouse(MouseReport &report)
 {
-#if DEBUG_ENABLE   
     bluefruit_trace_header();
-#endif
     _serial_send(0xFD);
     _serial_send(0x00);
     _serial_send(0x03);
@@ -83,9 +75,7 @@ void BluefruitHost::sendMouse(MouseReport &report)
     _serial_send(report.getV()); // TODO: determine if bluefruit 
     _serial_send(report.getH()); //       supports mouse wheel - BCG
     _serial_send(0x00);
-#if DEBUG_ENABLE
     bluefruit_trace_footer();
-#endif
 };
 
 /*
@@ -133,9 +123,7 @@ void BluefruitHost::sendConsumer(uint16_t data)
     _last_consumer_data = data;
     
     uint16_t bitmap = CONSUMER2BLUEFRUIT(data);
-#if DEBUG_ENABLE
     bluefruit_trace_header();
-#endif
     _serial_send(0xFD);
     _serial_send(0x00);
     _serial_send(0x02);
@@ -145,9 +133,7 @@ void BluefruitHost::sendConsumer(uint16_t data)
     _serial_send(0x00);
     _serial_send(0x00);
     _serial_send(0x00);
-#if DEBUG_ENABLE
     bluefruit_trace_footer();
-#endif
 };
 
 void BluefruitHost::sendSystem(uint16_t data)
@@ -157,9 +143,7 @@ void BluefruitHost::sendSystem(uint16_t data)
 
 void BluefruitHost::_serial_send(uint8_t data)
 {
-#if DEBUG_ENABLE
-    KeyboardDebug.print(' ');
-    KeyboardDebug.print(data, HEX);
-#endif
+	kb_dprint(" ");
+	kb_dprintf(data, HEX);
     Serial1.write(data);
 }

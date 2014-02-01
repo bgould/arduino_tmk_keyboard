@@ -20,7 +20,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "tmk_keycode.h"
 #include "tmk_host.h"
 #include "tmk_util.h"
-#include "tmk_nodebug.h"
 
 
 #ifdef NKRO_ENABLE
@@ -53,7 +52,7 @@ void host_keyboard_send(report_keyboard_t *report)
     if (!driver) return;
     (*driver->send_keyboard)(report);
 
-    if (debug_keyboard) {
+    if (tmk_debug_keyboard) {
         dprint("keyboard_report: ");
         uint8_t i = 0;
         for (; i < REPORT_SIZE; i++) {

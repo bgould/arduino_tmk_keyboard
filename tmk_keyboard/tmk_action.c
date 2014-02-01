@@ -27,12 +27,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "tmk_action_util.h"
 #include "tmk_action.h"
 
-#ifdef DEBUG_ACTION
-#include "tmk_debug.h"
-#else
-#include "tmk_nodebug.h"
-#endif
-
 
 void action_exec(keyevent_t event)
 {

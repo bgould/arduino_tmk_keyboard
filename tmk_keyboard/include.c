@@ -7,4 +7,6 @@
 #include "tmk_host.c"
 #include "tmk_keymap.c"
 #include "tmk_ps2_busywait.c"
+//#include "tmk_print.c"
 #include "tmk_util.c"
+#include "xprintf.c"

@@ -28,10 +28,10 @@ void KeyboardFirmware_::begin(KeyboardHost &host, KeyboardMatrix &matrix)
     _host->begin();
     _matrix->begin();
     
+    xdev_out(arduino_tmk_sendchar);
+    
     if (!_global_host_driver_set) {
-#if DEBUG_ENABLE
-        KeyboardDebug.println(F("setting global host driver"));
-#endif
+        kb_dprint("setting global host driver");
         host_set_driver(&_global_host_driver);
     }
 }
@@ -47,27 +47,26 @@ void KeyboardFirmware_::runTask()
     for (uint8_t r = 0; r < MATRIX_ROWS; r++) {
         matrix_row = _matrix->getRow(r);
         matrix_change = matrix_row ^ matrix_prev[r];
-#if DEBUG_ENABLE
-        if (matrix_change)
-            _matrix->debugPrint();
-#endif
+        //if (matrix_change)
+        //    _matrix->debugPrint();
         if (_matrix->isGhostInRow(r)) {
             matrix_prev[r] = matrix_row;
             continue;
         }
         for (uint8_t c = 0; c < MATRIX_COLS; c++) {
             if (matrix_change & ((matrix_row_t)1<<c)) {
-#if DEBUG_ENABLE
-                KeyboardDebug.print(F("{ .row = ")); 
-                KeyboardDebug.print(r); 
-                KeyboardDebug.print(F(", .col = ")); 
-                KeyboardDebug.print(c); 
-                KeyboardDebug.print(F(", .pressed = ")); 
-                KeyboardDebug.print(matrix_row & ((matrix_row_t)1<<c), BIN);
-                KeyboardDebug.print(F(", .time = ")); 
-                KeyboardDebug.print(millis());
-                KeyboardDebug.println(F(" }"));
-#endif
+				uint32_t real_state = (layer_state | default_layer_state);
+                kb_dprint("{ .row = "); 
+                kb_dprintf(r, DEC);
+                kb_dprint(", .col = "); 
+                kb_dprintf(c, DEC);
+                kb_dprint(", .layer = ");
+                kb_dprintf(real_state, BIN);
+                kb_dprint(", .pressed = "); 
+                kb_dprintf(matrix_row & ((matrix_row_t)1<<c), BIN);
+                kb_dprint(", .time = "); 
+                kb_dprintf(millis(), DEC);
+                kb_dprintln(" }");
                 exec_action(r, c, matrix_row);
                 // record a processed key
                 matrix_prev[r] ^= ((matrix_row_t)1<<c);
@@ -108,52 +107,34 @@ KeyboardFirmware_ KeyboardFirmware;
 
 // Not implemented yet
 static uint8_t keyboard_leds(void) {
-#if DEBUG_ENABLE
-    KeyboardDebug.println("entering send_keyboard()");
-#endif
+    kb_dprintln("entering send_keyboard()");
     return KeyboardFirmware.getHost()->getLEDs();
 }
 
 static void send_system(uint16_t data) {
-#if DEBUG_ENABLE
-    KeyboardDebug.println(F("entering send_system()"));
-#endif
+    kb_dprintln("entering send_system()");
     KeyboardFirmware.getHost()->sendSystem(data);
-#if DEBUG_ENABLE
-    KeyboardDebug.println(F("exiting send_system()"));
-#endif
+    kb_dprintln("exiting send_system()");
 }
 
 static void send_keyboard(report_keyboard_t *report_t) {
-#if DEBUG_ENABLE
-    KeyboardDebug.println(F("entering send_keyboard()"));
-#endif
+    kb_dprintln("entering send_keyboard()");
     KeyboardReport report(report_t);
     KeyboardFirmware.getHost()->sendKeyboard(report);
     delete &report;
-#if DEBUG_ENABLE
-    KeyboardDebug.println(F("exiting send_keyboard()"));
-#endif
+    kb_dprintln("exiting send_keyboard()");
 }
 
 static void send_mouse(report_mouse_t *report_t) {
-#if DEBUG_ENABLE
-    KeyboardDebug.println(F("entering send_mouse()"));
-#endif
+    kb_dprintln("entering send_mouse()");
     MouseReport report(report_t);
     KeyboardFirmware.getHost()->sendMouse(report);
     delete &report;
-#if DEBUG_ENABLE
-    KeyboardDebug.println(F("exiting send_mouse()"));
-#endif
+    kb_dprintln("exiting send_mouse()");
 }
 
 static void send_consumer(uint16_t data) {
-#if DEBUG_ENABLE
-    KeyboardDebug.println(F("entering send_consumer()"));
-#endif
+    kb_dprintln("entering send_consumer()");
     KeyboardFirmware.getHost()->sendConsumer(data);
-#if DEBUG_ENABLE
-    KeyboardDebug.println(F("exiting send_consumer()"));
-#endif
+    kb_dprintln("exiting send_consumer()");
 }
