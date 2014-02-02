@@ -22,7 +22,6 @@
 #include "KeyboardKey.h"
 #include "KeyboardMatrix.h"
 #include "KeyboardHost.h"
-#include "KeyboardDebug.h"
 #include "KeyboardReport.h"
 #include "MouseReport.h"
 #include "BluefruitHost.h"

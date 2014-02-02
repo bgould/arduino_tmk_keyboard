@@ -1,2 +1,2 @@
 #include "config.h"
-#include <tmk_keyboard/include.c>
+#include <tmk/include.c>

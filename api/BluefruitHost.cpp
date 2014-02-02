@@ -28,12 +28,12 @@
 
 static inline void bluefruit_trace_header()
 {
-    kb_dprint("=== HID report via Bluefruit ===> ");
+    dprint("bluefruit: ");
 }
 
 static inline void bluefruit_trace_footer()
 {
-    kb_dprintln("");
+    dprintln();
 }
 
 BluefruitHost::BluefruitHost() {
@@ -53,6 +53,7 @@ uint8_t BluefruitHost::getLEDs()
 void BluefruitHost::sendKeyboard(KeyboardReport &report)
 {
     bluefruit_trace_header();
+    dprintf("(keyboard) ");
     _serial_send(0xFD);
     _serial_send(report.getModifiers());
     _serial_send(report.getReserved());
@@ -66,6 +67,7 @@ void BluefruitHost::sendKeyboard(KeyboardReport &report)
 void BluefruitHost::sendMouse(MouseReport &report)
 {
     bluefruit_trace_header();
+    dprintf("(mouse) ");
     _serial_send(0xFD);
     _serial_send(0x00);
     _serial_send(0x03);
@@ -124,6 +126,7 @@ void BluefruitHost::sendConsumer(uint16_t data)
     
     uint16_t bitmap = CONSUMER2BLUEFRUIT(data);
     bluefruit_trace_header();
+    dprintf("(consumer) ");
     _serial_send(0xFD);
     _serial_send(0x00);
     _serial_send(0x02);
@@ -143,7 +146,7 @@ void BluefruitHost::sendSystem(uint16_t data)
 
 void BluefruitHost::_serial_send(uint8_t data)
 {
-	kb_dprint(" ");
-	kb_dprintf(data, HEX);
+	dprint(" ");
+	dprintf("%02x", data);
     Serial1.write(data);
 }

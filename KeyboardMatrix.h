@@ -28,9 +28,7 @@ class KeyboardMatrix
         virtual bool isOn(uint8_t row, uint8_t col) = 0;
         virtual bool isGhostInRow(uint8_t row) = 0;
         virtual matrix_row_t getRow(uint8_t row) = 0;
-#if DEBUG_ENABLE
         virtual void debugPrint(void) = 0;
-#endif
 };
 
 #endif

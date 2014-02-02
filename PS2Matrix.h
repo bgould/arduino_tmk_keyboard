@@ -17,9 +17,7 @@ class PS2Matrix : public KeyboardMatrix
         virtual bool isOn(uint8_t row, uint8_t col);
         bool isGhostInRow(uint8_t row);
         virtual matrix_row_t getRow(uint8_t row);
-#if DEBUG_ENABLE        
         virtual void debugPrint(void);
-#endif
     protected:
         void _make(uint8_t code);
         void _break(uint8_t code); 

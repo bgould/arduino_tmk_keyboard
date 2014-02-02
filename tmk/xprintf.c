@@ -45,8 +45,12 @@ void xputs (					/* Put a string to the default device */
 	const char* str				/* Pointer to the string */
 )
 {
-	while (*str)
-		xputc(*str++);
+	unsigned char c;
+	do {
+		c = pgm_read_byte(str++);
+		if (c)
+			xputc(c);
+	} while (c);
 }
 
 
@@ -60,8 +64,12 @@ void xfputs (					/* Put a string to the specified device */
 
 	pf = xfunc_out;		/* Save current output device */
 	xfunc_out = func;	/* Switch output to specified device */
-	while (*str)		/* Put the string */
-		xputc(*str++);
+	unsigned char c;
+	do {
+		c = pgm_read_byte(str++);
+		if (c)
+			xputc(c);
+	} while (c);
 	xfunc_out = pf;		/* Restore output device */
 }
 
@@ -96,24 +104,24 @@ void xvprintf (
 
 
 	for (;;) {
-		c = *fmt++;					/* Get a char */
+		c = pgm_read_byte(fmt++);					/* Get a char */
 		if (!c) break;				/* End of format? */
 		if (c != '%') {				/* Pass through it if not a % sequense */
 			xputc(c); continue;
 		}
 		f = 0;
-		c = *fmt++;					/* Get first char of the sequense */
+		c = pgm_read_byte(fmt++);	/* Get first char of the sequense */
 		if (c == '0') {				/* Flag: '0' padded */
-			f = 1; c = *fmt++;
+			f = 1; c = pgm_read_byte(fmt++);
 		} else {
 			if (c == '-') {			/* Flag: left justified */
-				f = 2; c = *fmt++;
+				f = 2; c = pgm_read_byte(fmt++);
 			}
 		}
-		for (w = 0; c >= '0' && c <= '9'; c = *fmt++)	/* Minimum width */
+		for (w = 0; c >= '0' && c <= '9'; c = pgm_read_byte(fmt++))	/* Minimum width */
 			w = w * 10 + c - '0';
 		if (c == 'l' || c == 'L') {	/* Prefix: Size is long int */
-			f |= 4; c = *fmt++;
+			f |= 4; c = pgm_read_byte(fmt++);
 		}
 		if (!c) break;				/* End of format? */
 		d = c;

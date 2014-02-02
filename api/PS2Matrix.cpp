@@ -6,9 +6,7 @@ PS2Matrix::PS2Matrix()
 
 void PS2Matrix::begin()
 {
-#if DEBUG_ENABLE
-    KeyboardDebug.println(F("[ Initializing PS2 matrix ]"));
-#endif
+    dprintf("[ Initializing PS2 matrix ]\n");
     ps2_host_init();
 
     for (uint8_t i = 0, c = getRows(); i < c; i++) _matrix[i] = 0x00;
@@ -24,7 +22,6 @@ matrix_row_t PS2Matrix::getRow(uint8_t row)
     return _matrix[row];
 }
 
-#if DEBUG_ENABLE
 void PS2Matrix::debugPrint(void)
 {
     #if DEBUG_MATRIX
@@ -43,7 +40,6 @@ void PS2Matrix::debugPrint(void)
     }
     #endif
 }
-#endif
 
 bool PS2Matrix::isGhostInRow(uint8_t row)
 {

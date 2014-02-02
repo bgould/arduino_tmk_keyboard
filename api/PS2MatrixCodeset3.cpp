@@ -20,43 +20,34 @@ uint8_t PS2MatrixCodeset3::scan()
 
     uint8_t code;
     if ((code = ps2_host_recv())) {
-#if DEBUG_ENABLE
-        KeyboardDebug.print(F("r")); KeyboardDebug.print(code, HEX); KeyboardDebug.print(F(" "));
-#endif
+		dprint("r"); 
+		dprintf("%02x", code); 
+		dprint(" ");
     }
 
     uint8_t response;
     switch (state) {
         case RESET:
-#if DEBUG_ENABLE
-            KeyboardDebug.print(F("wFF "));
-#endif
+            dprint("wFF ");
             response = ps2_host_send(0xFF);
             if (response == 0xFA) {
-#if DEBUG_ENABLE
-                KeyboardDebug.print(F("[ack]\nRESET_RESPONSE: "));
-#endif
+				dprint("[ack]\nRESET_RESPONSE: ");
                 state = RESET_RESPONSE;
             } else {
-#if DEBUG_ENABLE
-    KeyboardDebug.print(F("{ response: "));
-    KeyboardDebug.print(response, HEX);
-    KeyboardDebug.print(F(", error: "));
-    KeyboardDebug.print(ps2_error);
-    KeyboardDebug.println(F("} "));
-#endif
+				dprint("{ response: ");
+				dprintf("%02x", response);
+				dprint(", error: ");
+				dprintf("%x", ps2_error);
+				dprint("} ");
+				dprintln();
             }
             break;
         case RESET_RESPONSE:
             if (code == 0xAA) {
-#if DEBUG_ENABLE
-                KeyboardDebug.print(F("[ok]\nKBD_ID: "));
-#endif
+                dprint("[ok]\nKBD_ID: ");
                 state = KBD_ID0;
             } else if (code) {
-#if DEBUG_ENABLE
-                KeyboardDebug.print(F("err\nRESET: "));
-#endif
+                dprint("err\nRESET: ");
                 state = RESET;
             }
             break;
@@ -68,20 +59,14 @@ uint8_t PS2MatrixCodeset3::scan()
             break;
         case KBD_ID1:
             if (code) {
-#if DEBUG_ENABLE
-                KeyboardDebug.print(F("\nCONFIG: "));
-#endif
+                dprint("\nCONFIG: ");
                 state = CONFIG;
             }
             break;
         case CONFIG:
-#if DEBUG_ENABLE
-            KeyboardDebug.print("wF8 ");
-#endif
+            dprint("wF8 ");
             if (ps2_host_send(0xF8) == 0xFA) {
-#if DEBUG_ENABLE
-                KeyboardDebug.print(F("[ack]\nREADY\n"));
-#endif
+                dprint("[ack]\nREADY\n");
                 state = READY;
             }
             break;
@@ -91,22 +76,18 @@ uint8_t PS2MatrixCodeset3::scan()
                     break;
                 case 0xF0:
                     state = F0;
-#if DEBUG_ENABLE
-                    KeyboardDebug.print(" ");
-#endif
+                    dprint(" ");
                     break;
                 default:    // normal key make
                     if (code < 0x88) {
                         _make(code);
                     } else {
-#if DEBUG_ENABLE
-                        KeyboardDebug.print(F("unexpected scan code at READY: ")); KeyboardDebug.print(code, HEX); KeyboardDebug.print(F("\n"));
-#endif
+                        dprint("unexpected scan code at READY: "); 
+                        dprintf("%02X", code); 
+                        dprint("\n");
                     }
                     state = READY;
-#if DEBUG_ENABLE
-                    KeyboardDebug.print(F("\n"));
-#endif
+                    dprint("\n");
             }
             break;
         case F0:    // Break code
@@ -117,14 +98,12 @@ uint8_t PS2MatrixCodeset3::scan()
                     if (code < 0x88) {
                         _break(code);
                     } else {
-#if DEBUG_ENABLE
-                        KeyboardDebug.print(F("unexpected scan code at F0: ")); KeyboardDebug.print(code, HEX); KeyboardDebug.print(F("\n"));
-#endif
+                        dprint("unexpected scan code at F0: "); 
+                        dprintf("%02X", code); 
+                        dprint("\n");
                     }
                     state = READY;
-#if DEBUG_ENABLE
-                    KeyboardDebug.print(F("\n"));
-#endif
+                    dprint("\n");
             }
             break;
     }
