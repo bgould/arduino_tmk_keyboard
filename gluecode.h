@@ -26,6 +26,9 @@
 
 #include "Arduino.h"
 
+#define NO_ACTION_MACRO
+#define NO_ACTION_ONESHOT
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -35,7 +38,7 @@ extern "C" {
 
 void print_set_sendchar(int8_t (*print_sendchar_func)(uint8_t));
 
-#ifndef NO_DEBUG
+#if DEBUG_ENABLE
 
 #define dprint(s)           do { if (debug_enable) xputs(PSTR(s)); } while (0)
 #define dprintln()          do { if (debug_enable) xputs(PSTR("\n")); } while (0)
@@ -118,7 +121,24 @@ void print_set_sendchar(int8_t (*print_sendchar_func)(uint8_t));
 #define debug_bin_reverse(data)   debug_bin8(data)
 
 #else
-#include "nodebug.h"
+#include "tmk/tmk_keyboard/common/nodebug.h"
+
+#define print_S(s)
+#define print_P(s)
+#define print_dec(data)
+#define print_decs(data)
+#define print_hex4(data)
+#define print_hex8(data)
+#define print_hex16(data)
+#define print_hex32(data)
+#define print_bin4(data)
+#define print_bin8(data)
+#define print_bin16(data)
+#define print_bin32(data)
+#define print_bin_reverse8(data)
+#define print_bin_reverse16(data)
+#define print_bin_reverse32(data)
+
 #endif
 
 #endif

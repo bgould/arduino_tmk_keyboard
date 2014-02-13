@@ -1,12 +1,5 @@
 #include "config.h"
-#include <SoftwareSerial.h>
 #include <KeyboardFirmware.h>
-
-#define RESET_BUTTON_PIN 4
-#define PAIR_LED_PIN 5
-#define PAIR_BUTTON_PIN 6
-#define KEY_LED_PIN 7
-#define OUTPUT_LED_PIN 17
 
 BluefruitHost host;
 PS2MatrixCodeset3 matrix;
@@ -14,29 +7,31 @@ static uint16_t reset_press_time = 0;
 
 void setup() {
 
-#if DEBUG_ENABLE    
-    debug_enable = true;
-#endif
-
-    print_set_sendchar(arduino_tmk_sendchar);
-    
-    if (debug_enable)
-        while (!Serial) ;
-
-    dprint("started logging\n");
-
     pinMode(KEY_LED_PIN, INPUT);
     pinMode(PAIR_LED_PIN, INPUT);
     pinMode(PAIR_BUTTON_PIN, OUTPUT);
     pinMode(RESET_BUTTON_PIN, OUTPUT);
+    pinMode(DEBUGGING_LED, OUTPUT);
     pinMode(10, OUTPUT);
-    
-    digitalWrite(10, HIGH);                // turn on the bluefruit
-    digitalWrite(OUTPUT_LED_PIN, HIGH);    // turn the RX LED pin off
-    digitalWrite(PAIR_BUTTON_PIN, LOW);    // write high for 5 seconds to reset pairing
-    digitalWrite(RESET_BUTTON_PIN, HIGH);  // pull low to reset the bluefruit module
 
+    digitalWrite(10, HIGH);                        // turn on the bluefruit
+    digitalWrite(PAIR_BUTTON_PIN, LOW);            // write high for 5 seconds to reset pairing
+    digitalWrite(RESET_BUTTON_PIN, LOW);           // pull low to reset the bluefruit module
+    digitalWrite(OUTPUT_LED_PIN, OUTPUT_LED_OFF);
+
+#if DEBUG_ENABLE    
+    debug_enable = true;
+    while (!Serial) ;
+#endif
+
+    print_set_sendchar(arduino_tmk_sendchar);
+    dprint("started logging\n");    
+    
+    digitalWrite(DEBUGGING_LED, DEBUGGING_LED_ON);
     KeyboardFirmware.begin(host, matrix);
+    digitalWrite(DEBUGGING_LED, DEBUGGING_LED_OFF);
+    
+    digitalWrite(RESET_BUTTON_PIN, HIGH);  // turn on bluefruit
 }
 
 void loop() {
@@ -46,9 +41,9 @@ void loop() {
     
     // Now sync the pair button light with the output pin
     if (digitalRead(PAIR_LED_PIN) == HIGH) {
-        digitalWrite(OUTPUT_LED_PIN, LOW);
+        digitalWrite(OUTPUT_LED_PIN, OUTPUT_LED_ON);
     } else {
-        digitalWrite(OUTPUT_LED_PIN, HIGH);
+        digitalWrite(OUTPUT_LED_PIN, OUTPUT_LED_OFF);
     }
     
     // receive any messages from Bluefruit and output them if necessary
@@ -74,8 +69,8 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt)
 {
     bool pressed = record->event.pressed;
     dprint("== action function called"); dprintln();
-    dprint("=  id:      "); print_dec(id); dprintln();
-    dprint("=  pressed: "); print_dec(record->event.pressed); dprintln();
+    dprint("=  id:      "); debug_dec(id); dprintln();
+    dprint("=  pressed: "); debug_dec(record->event.pressed); dprintln();
     if (id == 0) {
         if (pressed) {
             layer_on(1);

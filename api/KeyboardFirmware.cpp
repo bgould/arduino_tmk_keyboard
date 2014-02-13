@@ -18,7 +18,11 @@ static host_driver_t _global_host_driver = {
 static bool _global_host_driver_set = false;
 
 extern "C" int8_t arduino_tmk_sendchar(uint8_t c) {
+#if DEBUG_ENABLE
 	return Serial.write(c);
+#else
+    return 0;
+#endif
 }
 
 KeyboardFirmware_::KeyboardFirmware_()
