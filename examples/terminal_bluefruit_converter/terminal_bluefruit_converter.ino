@@ -12,9 +12,7 @@ void setup() {
     pinMode(PAIR_BUTTON_PIN, OUTPUT);
     pinMode(RESET_BUTTON_PIN, OUTPUT);
     pinMode(DEBUGGING_LED, OUTPUT);
-    pinMode(10, OUTPUT);
 
-    digitalWrite(10, HIGH);                        // turn on the bluefruit
     digitalWrite(PAIR_BUTTON_PIN, LOW);            // write high for 5 seconds to reset pairing
     digitalWrite(RESET_BUTTON_PIN, LOW);           // pull low to reset the bluefruit module
     digitalWrite(OUTPUT_LED_PIN, OUTPUT_LED_OFF);
