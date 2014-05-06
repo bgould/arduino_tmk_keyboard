@@ -115,7 +115,7 @@ KEYMAPS = {
      * `----'    `---------------------------------------'    `----' `-----------' `---------------'
      */
     PS2_CODESET3_KEYMAP(
-                     FN2, F14, F15, F16, F17, F18, F19, F20, F21, F22, PSCR,SLCK,
+                     ESC, F14, F15, F16, F17, F18, F19, F20, F21, F22, PSCR,SLCK,
                      F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12,
 
     PSCR,ESC,   GRV, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   MINS,EQL, JYEN,BSPC,  INS, HOME,PGUP,  NLCK,PSLS,PAST,PMNS,
