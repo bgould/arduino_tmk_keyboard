@@ -12,7 +12,7 @@
 #define DEBUGGING_LED_ON HIGH
 #define DEBUGGING_LED_OFF LOW
 
-#define DEBUG_ENABLE true
+#define DEBUG_ENABLE false
 
 #define EXTRAKEY_ENABLE 1
 #define MOUSEKEY_ENABLE 1
