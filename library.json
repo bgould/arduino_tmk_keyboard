@@ -1,0 +1,12 @@
+{
+  "name": "Arduino TMK Keyboard",
+  "version": "0.1",
+  "keywords": "keyboard, hid, bluetooth",
+  "description": "Arduino wrapper for the TMK Keyboard firmware",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bgould/arduino_tmk_keyboard.git"
+  },
+  "frameworks": "arduino",
+  "platforms": "*"
+}
